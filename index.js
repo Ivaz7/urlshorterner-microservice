@@ -68,7 +68,7 @@ app.get('/api/shorturl/:short_url', async (req, res) => {
   const urlDoc = await urls.findOne({
     short_url: +short_url
   })
-  res.redirect(urlDoc.url)
+  res.redirect(urlDoc.original_url)
 });
 
 app.listen(port, function() {
