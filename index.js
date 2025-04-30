@@ -39,13 +39,20 @@ app.post('/api/shorturl', (req, res) => {
       }
 
       const result = await urls.insertOne(urlDoc)
-      console.log(result)
       res.json({
         url,
         short_url: urlCount
       })
     }
   })
+});
+
+app.get('/api/shorturl/:short_url', async (req, res) => {
+  const { short_url } = req.params;
+  const urlDoc = await urls.findOne({
+    short_url: +short_url
+  })
+  res.redirect(urlDoc.url)
 });
 
 app.listen(port, function() {
