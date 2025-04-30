@@ -36,7 +36,15 @@ app.post('/api/shorturl', (req, res) => {
   }
   
   dns.lookup(hostname, async (error, address) => {
-    if (!address || error) {
+    // check the existing one
+    const existingDoc = await urls.findOne({ original_url: inputUrl });
+
+    if (existingDoc) {
+      res.json({
+        original_url: existingDoc.original_url,
+        short_url: existingDoc.short_url
+      });
+    } else if (!address || error) {
       res.json({ error: "Invalid URL" });
     } else {
       const urlCount = await urls.countDocuments({});
