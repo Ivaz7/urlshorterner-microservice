@@ -41,14 +41,14 @@ app.post('/api/shorturl', (req, res) => {
     } else {
       const urlCount = await urls.countDocuments({});
       const urlDoc = {
-        url: inputUrl,
+        original_url: inputUrl,
         short_url: urlCount
       };
   
       await urls.insertOne(urlDoc);
   
       res.json({
-        url: inputUrl,
+        original_url: inputUrl,
         short_url: urlCount
       });
     }
